@@ -726,8 +726,18 @@ header a[aria-current="page"] {
   transition: background-color 0.15s ease;
 }
 
+/* Непрозрачный цвет: фото смешиваются с ним через multiply */
 .interview-card:hover {
-  background: rgba(17, 17, 17, 0.06);
+  background: #dbdad6;
+}
+
+/* Safari смешивает multiply только с фоном элементов страницы, а не с фоном body,
+   поэтому у контейнеров фото свой фон — иначе белый фон на фото остаётся белым */
+.guests li,
+.interview-card,
+.article-hero {
+  isolation: isolate;
+  background-color: var(--bg);
 }
 
 .interview-card:hover .link {
