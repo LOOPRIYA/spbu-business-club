@@ -163,7 +163,8 @@ footer a:hover,
 
 header {
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 32px;
   padding-block: 12px;
 }
@@ -177,14 +178,63 @@ header > a {
   font-weight: 700;
 }
 
-/* На узких экранах пункты меню переносятся на вторую строку */
 nav ul {
   display: flex;
-  flex-wrap: wrap;
   column-gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.menu-toggle {
+  display: none;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.menu-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* На телефоне меню прячется за кнопкой и раскрывается списком на всю ширину */
+@media (max-width: 720px) {
+  header {
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  header nav {
+    display: none;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .menu-toggle[aria-expanded="true"] + nav {
+    display: block;
+  }
+
+  nav ul {
+    flex-direction: column;
+    border-bottom: 1px solid var(--text);
+  }
+
+  nav a {
+    padding: 14px 0;
+    border-top: 1px solid var(--text);
+  }
 }
 
 /* Первый экран */
@@ -293,7 +343,9 @@ abbr {
 }
 
 /* Фото на белом фоне: multiply растворяет белый в фоне страницы */
-.guests img {
+.guests img,
+.interview-card img,
+.article-hero img {
   display: block;
   width: 100%;
   height: auto;
@@ -305,6 +357,31 @@ abbr {
 
 .guests p {
   margin-top: 8px;
+}
+
+/* На телефоне гости — карусель на всю ширину экрана: карточки уходят за край экрана,
+   а не обрезаются отступами страницы. На десктопе остаётся обычная сетка */
+@media (max-width: 720px) {
+  .carousel {
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: min(300px, 78%);
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: var(--gutter);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel > li {
+    scroll-snap-align: start;
+  }
 }
 
 /* Программа */
@@ -517,16 +594,20 @@ header a[aria-current="page"] {
   padding-top: 8px;
 }
 
-/* Отрицательный отступ компенсирует пустое место слева у буквы «П», как на главной */
 .page-hero h1 {
-  margin-left: -0.05em;
   font-size: clamp(48px, 9vw, 120px);
   line-height: 0.9;
   text-wrap: balance;
 }
 
+/* Отрицательный отступ компенсирует пустое место слева у буквы «П», как на главной.
+   У «А» в «Архиве мероприятий» такого места почти нет, поэтому там сдвига нет */
+.program-hero h1 {
+  margin-left: -0.05em;
+}
+
 @media (max-width: 720px) {
-  .page-hero h1 {
+  .program-hero h1 {
     margin-left: 0;
   }
 }
@@ -619,6 +700,111 @@ header a[aria-current="page"] {
 
 .benefits li {
   min-height: 180px;
+}
+
+/* Архив и интервью */
+
+.interviews {
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.interviews li {
+  padding: 0;
+  border: 0;
+}
+
+/* Вся карточка — ссылка. Подпись «Читать интервью ↗» и подсветка при наведении показывают, что на неё можно нажать */
+.interview-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid var(--text);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.interview-card:hover {
+  background: rgba(17, 17, 17, 0.06);
+}
+
+.interview-card:hover .link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.interview-card .link {
+  margin-top: auto;
+  padding: 0;
+}
+
+.card-label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.interview-card h3 + p {
+  margin-top: 8px;
+}
+
+.back-link {
+  display: inline-block;
+  padding: 8px 0;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.article-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 400px);
+  align-items: end;
+  gap: 32px 48px;
+  padding-top: 8px;
+}
+
+/* Отрицательный отступ компенсирует пустое место слева у буквы «И» */
+.article-hero h1 {
+  margin: 24px 0 0 -0.05em;
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.article-hero p {
+  margin-top: 16px;
+  font-size: clamp(18px, 2vw, 22px);
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .article-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .article-hero h1 {
+    margin-left: 0;
+  }
+}
+
+/* Идеи встречи — это предложения, поэтому без заглавных букв */
+.ideas h3 {
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* Мобильные */

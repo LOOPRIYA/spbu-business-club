@@ -9,22 +9,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@700&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script src="menu.js" defer></script>
 </head>
 <body>
 
   <header>
     <a href="index.html" aria-label="СПбГУ Бизнес-клуб, на главную">БК</a>
-    <nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button>
+    <nav id="site-nav" aria-label="Основное меню">
       <ul>
         <li><a href="program.html" aria-current="page">Программа для основателей</a></li>
-        <li><a href="index.html#events">Мероприятия</a></li>
+        <li><a href="events.html">Архив мероприятий</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
 
-    <section class="page-hero">
+    <section class="page-hero program-hero">
       <h1>Программа для основателей</h1>
       <p>Получите грант до 1&nbsp;000&nbsp;000&nbsp;₽ на свой проект — команда поможет подготовить заявку и документы и будет сопровождать на всех этапах</p>
       <a class="button" href="#contacts">Подать заявку</a>
@@ -217,7 +219,7 @@
       <p>© 2026 <abbr title="Санкт-Петербургский государственный университет">СПбГУ</abbr> Бизнес-клуб</p>
       <ul>
         <li><a href="index.html#program">Программа</a></li>
-        <li><a href="index.html#events">Мероприятия</a></li>
+        <li><a href="events.html">Архив мероприятий</a></li>
       </ul>
     </div>
   </footer>
