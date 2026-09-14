@@ -149,8 +149,7 @@ footer a:hover,
 /* Стрелка ↗ */
 
 .button::after,
-.link::after,
-.about .cards li:first-child::before {
+.link::after {
   content: "";
   width: 10px;
   height: 10px;
@@ -317,33 +316,9 @@ abbr {
   border: 1px solid var(--text);
 }
 
-/* Первая карточка — заголовок группы со стрелкой, как в макете */
-.about .cards li:first-child {
-  position: relative;
-  justify-content: flex-end;
-}
-
-.about .cards li:first-child::before {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 20px;
-  height: 20px;
-}
-
-.about .cards li:first-child h3 {
-  font-size: 24px;
-  font-weight: 400;
-}
-
 /* Гости */
 
-.guests li {
-  gap: 20px;
-}
-
 /* Фото на белом фоне: multiply растворяет белый в фоне страницы */
-.guests img,
 .interview-card img,
 .article-hero img {
   display: block;
@@ -355,14 +330,11 @@ abbr {
   mix-blend-mode: multiply;
 }
 
-.guests p {
-  margin-top: 8px;
-}
-
 /* На телефоне гости — карусель на всю ширину экрана: карточки уходят за край экрана,
-   а не обрезаются отступами страницы. На десктопе остаётся обычная сетка */
+   а не обрезаются отступами страницы. На десктопе остаётся обычная сетка.
+   Два класса — чтобы перебить сетку .interviews, объявленную ниже */
 @media (max-width: 720px) {
-  .carousel {
+  .cards.carousel {
     grid-auto-flow: column;
     grid-template-columns: none;
     grid-auto-columns: min(300px, 78%);
@@ -475,6 +447,18 @@ abbr {
   justify-self: start;
 }
 
+/* Заглушка вместо ссылки, пока регистрация закрыта: серая и без стрелки, чтобы не выглядела нажимаемой */
+.link-soon {
+  justify-self: start;
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* CTA */
 
 .cta {
@@ -496,6 +480,12 @@ abbr {
 .cta .button {
   grid-column: 2;
   grid-row: 1 / 3;
+}
+
+/* Telegram: тот же призыв, что и CTA, но в рамке — чтобы два блока подряд не сливались */
+.telegram {
+  padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 48px);
+  border: 1px solid var(--text);
 }
 
 /* Подвал */
@@ -574,13 +564,9 @@ footer {
   border-top: 1px solid var(--text);
 }
 
-.footer-bottom ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 32px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.footer-bottom address {
+  font-size: 14px;
+  font-style: normal;
 }
 
 /* Страница программы для основателей */
@@ -594,8 +580,10 @@ header a[aria-current="page"] {
   padding-top: 8px;
 }
 
+/* Минимум 48px, но на экранах уже ~370px он уменьшается вместе с экраном —
+   иначе длинное слово («МЕРОПРИЯТИЙ») не помещается в строку на 320px */
 .page-hero h1 {
-  font-size: clamp(48px, 9vw, 120px);
+  font-size: clamp(min(48px, 13vw), 9vw, 120px);
   line-height: 0.9;
   text-wrap: balance;
 }
@@ -733,7 +721,6 @@ header a[aria-current="page"] {
 
 /* Safari смешивает multiply только с фоном элементов страницы, а не с фоном body,
    поэтому у контейнеров фото свой фон — иначе белый фон на фото остаётся белым */
-.guests li,
 .interview-card,
 .article-hero {
   isolation: isolate;

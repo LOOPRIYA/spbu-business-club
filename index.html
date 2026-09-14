@@ -34,31 +34,40 @@
     <section>
       <div class="section-head">
         <h2>Наши гости</h2>
-        <!-- Моковая кнопка -->
-        <a class="button" href="#">Предложить спикера</a>
+        <a class="button" href="https://t.me/entrepreneurship_forever">Предложить спикера</a>
       </div>
 
-      <ul class="cards guests carousel">
+      <!-- ?from=home — чтобы кнопка «Назад» в интервью вела на главную -->
+      <ul class="cards interviews carousel">
         <li>
-          <img src="images/guests/teplitsky.jpg" alt="" width="960" height="960">
-          <div>
-            <h3>Аркадий Теплицкий</h3>
-            <p>Вице-президент холдинга «Адамант»</p>
-          </div>
+          <a class="interview-card" href="interview-teplitsky.html?from=home">
+            <img src="images/guests/teplitsky.jpg" alt="" width="960" height="960">
+            <div>
+              <h3>Аркадий Теплицкий</h3>
+              <p>Вице-президент холдинга «Адамант»</p>
+            </div>
+            <span class="link">Читать интервью</span>
+          </a>
         </li>
         <li>
-          <img src="images/guests/kapustin.png" alt="" width="400" height="400">
-          <div>
-            <h3>Александр Капустин</h3>
-            <p>Сооснователь бренда «Cerca Trova»</p>
-          </div>
+          <a class="interview-card" href="interview-kapustin.html?from=home">
+            <img src="images/guests/kapustin.png" alt="" width="400" height="400">
+            <div>
+              <h3>Александр Капустин</h3>
+              <p>Сооснователь бренда «Cerca Trova»</p>
+            </div>
+            <span class="link">Читать интервью</span>
+          </a>
         </li>
         <li>
-          <img src="images/guests/henderson-stewart.jpeg" alt="" width="380" height="380">
-          <div>
-            <h3>Дэвид Хендерсон&#8209;Стюарт</h3>
-            <p>Совладелец часового завода «Ракета»</p>
-          </div>
+          <a class="interview-card" href="interview-henderson-stewart.html?from=home">
+            <img src="images/guests/henderson-stewart.jpeg" alt="" width="380" height="380">
+            <div>
+              <h3>Дэвид Хендерсон&#8209;Стюарт</h3>
+              <p>Совладелец часового завода «Ракета»</p>
+            </div>
+            <span class="link">Читать интервью</span>
+          </a>
         </li>
       </ul>
     </section>
@@ -67,33 +76,24 @@
     <section class="events" id="events">
       <div class="section-head">
         <h2>Ближайшие мероприятия</h2>
-        <a class="button" href="#">Все мероприятия</a>
       </div>
 
       <ul>
         <li>
           <time datetime="2026-09-24">24.09</time>
           <div>
-            <h3>Как построить бизнес, пока учишься</h3>
+            <h3>Наталия Чанкина</h3>
             <p>Открытое интервью · 19:00</p>
           </div>
-          <a class="link" href="#" aria-label="Регистрация: Как построить бизнес, пока учишься">Регистрация</a>
+          <a class="link" href="https://t.me/entrepreneurship_forever" aria-label="Регистрация: Наталия Чанкина">Регистрация</a>
         </li>
         <li>
           <time datetime="2026-10-08">08.10</time>
           <div>
             <h3>Инвестиции на ранней стадии</h3>
-            <p>Дискуссия · 18:30</p>
+            <p>Открытое интервью · 18:30</p>
           </div>
-          <a class="link" href="#" aria-label="Регистрация: Инвестиции на ранней стадии">Регистрация</a>
-        </li>
-        <li>
-          <time datetime="2026-10-22">22.10</time>
-          <div>
-            <h3>Маркетинг без бюджета</h3>
-            <p>Мастер-класс · 19:00</p>
-          </div>
-          <a class="link" href="#" aria-label="Регистрация: Маркетинг без бюджета">Регистрация</a>
+          <span class="link-soon">Регистрация скоро откроется</span>
         </li>
       </ul>
     </section>
@@ -101,62 +101,42 @@
     <section class="about">
       <h2>Кто мы и чем занимаемся</h2>
 
-      <p>Организуем встречи с предпринимателями, руководителями компаний и экспертами, чтобы участники могли получать практические знания напрямую от людей с реальным опытом</p>
+      <p>Организуем встречи с предпринимателями, руководителями компаний и экспертами, чтобы участники могли получать практические знания напрямую от людей с опытом</p>
 
-      <!-- Моковый текст -->
       <ul class="cards">
         <li>
-          <h3>Наши ценности</h3>
-        </li>
-        <li>
           <h3>Практика</h3>
-          <p>Говорим о бизнесе с теми, кто его построил, — без лишней теории</p>
+          <p>Говорим о том, как на самом деле строится бизнес</p>
         </li>
         <li>
           <h3>Сообщество</h3>
-          <p>Объединяем студентов, выпускников и предпринимателей в одну среду</p>
+          <p>Можно найти партнёров и людей для новых проектов</p>
         </li>
         <li>
           <h3>Открытость</h3>
-          <p>Встречи открыты для всех, кому интересен бизнес и предпринимательство</p>
+          <p>Мероприятия, доступные для всех, кому интересен бизнес</p>
+        </li>
+        <li>
+          <h3>Предпринимательство</h3>
+          <p>Помогаем запускать собственные проекты и находить финансирование</p>
         </li>
       </ul>
     </section>
 
-    <!-- Моковый текст -->
-    <section class="split" id="program">
-      <div class="split-intro">
-        <h2>Программа клуба</h2>
-        <p>Каждый месяц — новые встречи и форматы. Выбирайте то, что подходит именно вам</p>
-        <a class="button" href="#apply">Подать заявку</a>
-      </div>
+    <section class="cta telegram">
+      <h2>Подпишитесь<br>на&nbsp;наш Telegram</h2>
 
-      <ol class="numbered">
-        <li>
-          <h3>Открытые интервью</h3>
-          <p>Разговор с основателем компании о пути, ошибках и решениях, которые сработали</p>
-        </li>
-        <li>
-          <h3>Дискуссии</h3>
-          <p>Эксперты с разными взглядами обсуждают актуальные вопросы бизнеса и экономики</p>
-        </li>
-        <li>
-          <h3>Мастер-классы</h3>
-          <p>Практические занятия по маркетингу, финансам и управлению командой</p>
-        </li>
-        <li>
-          <h3>Акселерация</h3>
-          <p>Сопровождение проектов на ранней стадии: от проверки идеи до встречи с инвесторами</p>
-        </li>
-      </ol>
+      <p>Анонсы встреч, интервью с предпринимателями, разборы выступлений и новости бизнес&#8209;клуба&nbsp;СПбГУ</p>
+
+      <a class="button" href="https://t.me/bcspbu">Подписаться</a>
     </section>
 
-    <section class="cta" id="apply">
+    <section class="cta">
       <h2>Есть идея?<br>Начни строить</h2>
 
       <p>Отбираем основателей на ранней стадии и помогаем пройти путь от идеи до первых инвестиций</p>
 
-      <a class="button" href="program.html">Подать заявку</a>
+      <a class="button" href="program.html">Подробнее</a>
     </section>
 
   </main>
@@ -196,11 +176,8 @@
     </section>
 
     <div class="footer-bottom">
-      <p>© 2026 <abbr title="Санкт-Петербургский государственный университет">СПбГУ</abbr> Бизнес-клуб</p>
-      <ul>
-        <li><a href="#program">Программа</a></li>
-        <li><a href="events.html">Архив мероприятий</a></li>
-      </ul>
+      <p>© 2025 <abbr title="Санкт-Петербургский государственный университет">СПбГУ</abbr> Бизнес-клуб</p>
+      <address>Санкт-Петербург, м.&nbsp;«Чернышевская», Таврическая&nbsp;ул., 21&#8288;–&#8288;23&#8288;–&#8288;25</address>
     </div>
   </footer>
 
