@@ -569,6 +569,13 @@ footer {
   font-style: normal;
 }
 
+/* На телефоне улица и дом — всегда второй строкой */
+@media (max-width: 720px) {
+  .footer-bottom address span {
+    display: block;
+  }
+}
+
 /* Страница программы для основателей */
 
 header a[aria-current="page"] {
