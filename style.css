@@ -2,6 +2,7 @@
   --bg: #e9e8e4;
   --text: #111111;
   --muted: #626262;
+  --surface: #dbdad6;
 
   --gutter: 24px;
   --container: 1152px;
@@ -63,6 +64,10 @@ h3 {
 :focus-visible {
   outline: 2px solid var(--text);
   outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 /* Раскладка */
@@ -158,6 +163,97 @@ footer a:hover,
   mask: var(--arrow) center / contain no-repeat;
 }
 
+/* Полоса с ближайшим мероприятием и таймером (countdown.js): на тон темнее страницы, с линией снизу, на всю ширину экрана */
+
+.event-bar {
+  display: block;
+  border-bottom: 1px solid var(--text);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.event-bar:focus-visible {
+  outline-offset: -4px;
+}
+
+.event-bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 24px;
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+  padding-block: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.event-bar:hover .event-bar-title {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Подпись и цифры не рвутся внутри; если не помещаются в строку — цифры целиком переносятся ниже */
+.event-bar-timer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.event-bar-date {
+  white-space: nowrap;
+}
+
+/* Цифры одинаковой ширины — строка не дёргается каждую секунду */
+/* Стрелка ↗ прикреплена к цифрам, чтобы при переносе не оставаться одна на строке */
+.event-bar-timer b {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.event-bar-timer b::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  -webkit-mask: var(--arrow) center / contain no-repeat;
+  mask: var(--arrow) center / contain no-repeat;
+}
+
+@media (max-width: 720px) {
+  .event-bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .event-bar-inner {
+    font-size: 12px;
+  }
+
+  .event-bar-timer {
+    gap: 4px 8px;
+  }
+
+  .event-bar-timer b {
+    gap: 8px;
+    font-size: 16px;
+  }
+}
+
 /* Шапка */
 
 header {
@@ -204,6 +300,25 @@ nav ul {
   text-underline-offset: 4px;
 }
 
+/* На десктопе подчёркивание пунктов меню вырастает слева направо */
+@media (min-width: 721px) {
+  header a {
+    background: linear-gradient(currentColor, currentColor) 0 calc(100% - 5px) / 0 1px no-repeat;
+  }
+
+  header a:hover,
+  header a[aria-current="page"] {
+    background-size: 100% 1px;
+    text-decoration: none;
+  }
+}
+
+@media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+  header a {
+    transition: background-size 0.3s cubic-bezier(0.2, 0.65, 0.2, 1);
+  }
+}
+
 /* На телефоне меню прячется за кнопкой и раскрывается списком на всю ширину */
 @media (max-width: 720px) {
   header {
@@ -215,24 +330,62 @@ nav ul {
     display: block;
   }
 
+  /* Меню раскрывается по высоте (0fr → 1fr); visibility убирает закрытые пункты из перехода по Tab */
   header nav {
-    display: none;
+    display: grid;
+    grid-template-rows: 0fr;
     width: 100%;
-    margin-top: 8px;
+    visibility: hidden;
   }
 
   .menu-toggle[aria-expanded="true"] + nav {
-    display: block;
+    grid-template-rows: 1fr;
+    visibility: visible;
   }
 
   nav ul {
     flex-direction: column;
-    border-bottom: 1px solid var(--text);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  nav li:first-child {
+    padding-top: 8px;
   }
 
   nav a {
     padding: 14px 0;
     border-top: 1px solid var(--text);
+  }
+
+  nav li:last-child a {
+    border-bottom: 1px solid var(--text);
+  }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+  header nav {
+    transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.65, 0.2, 1), visibility 0s 0.35s;
+  }
+
+  .menu-toggle[aria-expanded="true"] + nav {
+    transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.65, 0.2, 1), visibility 0s;
+  }
+
+  nav li {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .menu-toggle[aria-expanded="true"] + nav li {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.1s;
+  }
+
+  .menu-toggle[aria-expanded="true"] + nav li + li {
+    transition-delay: 0.18s;
   }
 }
 
@@ -248,16 +401,16 @@ nav ul {
 }
 
 /* Размер подобран так, чтобы заголовок занимал всю ширину в одну строку.
-   Отрицательный отступ компенсирует пустое место слева у буквы «С» */
+   Отрицательный отступ компенсирует пустое место слева у буквы «Б» */
 .hero h1 {
   grid-column: 1 / -1;
-  margin-left: -0.04em;
+  margin-left: -0.05em;
   font-size: calc(100cqi / 8.82);
   line-height: 0.85;
   white-space: nowrap;
 }
 
-/* На узких экранах — в две строки: «СПбГУ» / «Бизнес-клуб» */
+/* На узких экранах — в две строки: «Бизнес-клуб» / «СПбГУ» */
 @media (max-width: 720px) {
   .hero h1 {
     margin-left: 0;
@@ -562,11 +715,36 @@ footer {
   }
 }
 
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  order: 1;
+  gap: 8px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-bottom .legal a {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+.footer-bottom .legal a:hover {
+  color: var(--text);
+}
+
 /* Страница программы для основателей */
 
-header a[aria-current="page"] {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+/* На телефоне текущий пункт меню подчёркнут обычной линией; на десктопе — анимированной (раздел «Шапка») */
+@media (max-width: 720px) {
+  header a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 }
 
 .page-hero {
@@ -709,7 +887,7 @@ header a[aria-current="page"] {
 
 /* Непрозрачный цвет: фото смешиваются с ним через multiply */
 .interview-card:hover {
-  background: #dbdad6;
+  background: var(--surface);
 }
 
 /* Safari смешивает multiply только с фоном элементов страницы, а не с фоном body,
@@ -797,6 +975,63 @@ header a[aria-current="page"] {
   text-transform: none;
 }
 
+/* Страницы документов. Самое длинное слово «КОНФИДЕНЦИАЛЬНОСТИ» — около 10,7 своей высоты шрифта в ширину,
+   поэтому на узком экране размер не больше (ширина экрана − поля) / 11 */
+.legal-page h1 {
+  font-size: clamp(min(26px, (100vw - 2 * var(--gutter)) / 11), 6vw, 80px);
+}
+
+/* Текст документа: узкая колонка для чтения, заголовки разделов заметно меньше обычных */
+.legal-doc {
+  max-width: 760px;
+  padding-bottom: clamp(40px, 6vw, 80px);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+/* line-height 1.1 — чтобы «Д» и «Й» в соседних строках заголовка не накладывались */
+.legal-doc h2 {
+  margin: 48px 0 16px;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.1;
+}
+
+.legal-doc h2:first-child {
+  margin-top: 0;
+}
+
+.legal-doc p + p,
+.legal-doc ul + p {
+  margin-top: 12px;
+}
+
+.legal-doc ul {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal-doc li {
+  position: relative;
+  padding-left: 24px;
+}
+
+.legal-doc li + li {
+  margin-top: 8px;
+}
+
+.legal-doc li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+}
+
+.legal-doc a {
+  color: inherit;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
 /* Мобильные */
 
 @media (max-width: 720px) {
@@ -818,5 +1053,40 @@ header a[aria-current="page"] {
 
   .cards li {
     min-height: 160px;
+  }
+}
+
+/* Анимации: появление при прокрутке (animations.js) и стрелка ↗ при наведении.
+   Только проявление и небольшой подъём — без масштабирования и «прыжков», в духе строгого дизайна */
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Те же селекторы, что в animations.js */
+  .js-anim :is(.hero > *, .page-hero > :is(h1, p, .button), .article-hero > *, .section-head, .split-intro, .split-text, .about > :is(h2, p), .cta > *, footer section > h2):not(.is-visible),
+  .js-anim :is(.cards, .numbered, .events ul, .steps, .stats, .contact-cards):not(.is-visible) > * {
+    opacity: 0;
+  }
+
+  /* backwards: во время задержки элемент скрыт, после анимации возвращаются обычные стили */
+  .js-anim :is(.hero > *, .page-hero > :is(h1, p, .button), .article-hero > *, .section-head, .split-intro, .split-text, .about > :is(h2, p), .cta > *, footer section > h2).is-visible,
+  .js-anim :is(.cards, .numbered, .events ul, .steps, .stats, .contact-cards).is-visible > * {
+    animation: reveal 0.8s cubic-bezier(0.2, 0.65, 0.2, 1) calc(var(--i, 0) * 80ms) backwards;
+  }
+
+  .button::after,
+  .link::after {
+    transition: transform 0.2s ease;
+  }
+
+  .button:hover::after,
+  .link:hover::after,
+  .interview-card:hover .link::after {
+    transform: translate(2px, -2px);
   }
 }
